@@ -1,29 +1,32 @@
 import React from 'react';
 import ChildComponent from './ChildComponent';
+import AddComponent from './AddComponent';
+
 class MyComponent extends React.Component {
 
     state = {
-        firstName: '',
-        lastName: ''
+        arrJobs: [
+            { id: 'abcJob1', title: 'Developer', salary: '500' },
+            { id: 'abcJob2', title: 'Testers', salary: '400' },
+            { id: 'abcJob3', title: 'Project Manager', salary: '1000' }
+        ]
 
     }
 
-    handleChangeFirstName = (event) => {
+
+    addNewJob = (job) => {
+        console.log('>>>check job from parent:', job)
         this.setState({
-            firstName: event.target.value
+            arrJobs: [...this.state.arrJobs, job]
         })
     }
 
-    handleChangeLastName = (event) => {
+    deleteAJob = (job) => {
+        let currenJobs = this.state.arrJobs
+        currenJobs = currenJobs.filter(item => item.id !== job.id)
         this.setState({
-            lastName: event.target.value
+            arrJobs: currenJobs
         })
-    }
-
-    handelSubmit = (event) => {
-        console.log('check state: ', this.state)
-        event.preventDefault()
-        alert("click me")
     }
 
     render() {
@@ -33,27 +36,13 @@ class MyComponent extends React.Component {
 
         return (
             <>
+                <AddComponent
+                    addNewJob={this.addNewJob} />
 
-                <form>
-                    <label htmlFor="fname">First name:</label><br />
-                    <input
-                        type="text"
-                        value={this.state.firstName}
-                        onChange={(event) => this.handleChangeFirstName(event)} />
-                    <br />
-                    <label htmlFor="lname">Last name:</label><br />
-                    <input
-                        type="text"
-                        value={this.state.lastName}
-                        onChange={(event) => { this.handleChangeLastName(event) }} /><br /><br />
-                    <input
-                        type="submit"
-                        onClick={(event) => this.handelSubmit(event)} />
-                </form>
 
                 <ChildComponent
-                    name={'child one'}
-                    age={'25'}
+                    arrJobs={this.state.arrJobs}
+                    deleteAJob={this.deleteAJob}
 
                 />
 
