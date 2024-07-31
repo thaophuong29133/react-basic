@@ -29,6 +29,14 @@ class MyComponent extends React.Component {
         })
     }
 
+    componentDidUpdate(prevProps, prevState) {
+        console.log('run didupdate:', 'prev state:', prevState, 'current state:', this.state)
+    }
+
+    componentDidMount() {
+        console.log('run component did mount')
+    }
+
     render() {
         console.log('>>>call render: ', this.state)
         // JSK luôn chỉ trả ra 1 block
