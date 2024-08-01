@@ -12,9 +12,7 @@ class ListTodo extends React.Component {
             { id: 'todo2', title: 'Making video' },
             { id: 'todo3', title: 'Fixing bugs' },
         ],
-        editTodo: {
-
-        }
+        editTodo: {}
     }
 
     addNewTodo = (todo) => {
@@ -35,9 +33,23 @@ class ListTodo extends React.Component {
 
 
     handleEditTodo = (todo) => {
-        this.setState({
-            editTodo: todo
-        })
+        let { editTodo, listTodos } = this.state;
+        let isEmtyObj = Object.keys(editTodo).length === 0;
+        if (isEmtyObj === false && editTodo.id === todo.id) {
+            let listTodosCopy = [...listTodos];
+            let objIndex = listTodosCopy.findIndex((item => item.id == todo.id));
+
+            listTodosCopy[objIndex].title = editTodo.title;
+            this.setState({
+                listTodos: listTodosCopy
+            })
+            return;
+        }
+        else {
+            this.setState({
+                editTodo: todo
+            })
+        }
 
     }
 
